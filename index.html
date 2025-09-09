@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SecurePass Studio — Generator & Strength Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.86em%22 font-size=%2288%22>🔐</text></svg>">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="background"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">🔐</div>
+      <div class="titles">
+        <h1>SecurePass Studio</h1>
+        <p class="subtitle">Generate ultra-secure passwords and check their strength instantly.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel card action-panel">
+      <h2>Password</h2>
+
+      <div class="password-row">
+        <label class="sr-only" for="password-input">Password</label>
+        <input id="password-input" type="password" placeholder="Your secure password will appear here..." autocomplete="off" spellcheck="false" />
+        <div class="controls">
+          <button id="btn-generate" class="btn success" title="Generate password">Generate</button>
+          <button id="btn-copy" class="btn" title="Copy to clipboard">Copy</button>
+          <button id="btn-toggle" class="btn" title="Show/Hide password">Show</button>
+        </div>
+      </div>
+
+      <div class="options">
+        <div class="option">
+          <label for="length">Length: <span id="length-val">20</span></label>
+          <input id="length" type="range" min="8" max="64" value="20" />
+        </div>
+        <div class="checks">
+          <label class="toggle"><input type="checkbox" id="opt-lower" checked /> <span>Lowercase</span></label>
+          <label class="toggle"><input type="checkbox" id="opt-upper" checked /> <span>Uppercase</span></label>
+          <label class="toggle"><input type="checkbox" id="opt-digits" checked /> <span>Digits</span></label>
+          <label class="toggle"><input type="checkbox" id="opt-symbols" checked /> <span>Symbols</span></label>
+          <label class="toggle"><input type="checkbox" id="opt-ambiguous" checked /> <span>Exclude ambiguous</span></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel card result-panel">
+      <h2>Strength</h2>
+
+      <div class="meter">
+        <div id="strength-bar" class="bar score-0" style="width: 0%"></div>
+      </div>
+      <div class="strength-info">
+        <div>
+          <div class="label">Score</div>
+          <div id="score-label" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Entropy</div>
+          <div id="entropy" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Crack time (est.)</div>
+          <div id="crack-time" class="value">—</div>
+        </div>
+      </div>
+
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+
+      <div class="breach-row">
+        <label class="toggle"><input type="checkbox" id="opt-hibp" checked /> <span>Check against known breaches (privacy-preserving)</span></label>
+        <div id="breach-status" class="breach-status">—</div>
+      </div>
+    </section>
+
+    <section class="panel card info-panel">
+      <h2>About</h2>
+      <ul class="bullets">
+        - Generation uses cryptographically secure randomness (window.crypto).
+        - Strength analysis powered by zxcvbn.
+        - Breach checking uses Have I Been Pwned’s k‑Anonymity API. Your password never leaves your device: only the first 5 characters of a SHA‑1 hash are sent.
+        - Tip: Longer is stronger. 16–24+ characters is recommended.
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>SecurePass Studio — Built for real-world security.</span>
+  </footer>
+
+  <!-- Strength estimator -->
+  <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.js"></script>
+  <!-- App -->
+  <script src="./script.js"></script>
+</body>
+</html>
